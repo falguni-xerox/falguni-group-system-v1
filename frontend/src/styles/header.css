@@ -1,0 +1,181 @@
+/* ================= HEADER ================= */
+
+.header {
+  position: relative;
+  overflow: hidden;
+
+  background: linear-gradient(135deg, #ff8a00, #ffc62b);
+
+  border-radius: 0 0 28px 28px;
+
+  padding: 26px 20px 22px;
+
+  box-shadow: 0 10px 30px rgba(255, 150, 0, 0.25);
+}
+
+/* Main Layout */
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+
+  position: relative;
+  z-index: 2;
+}
+
+/* Logo */
+
+.logo-circle {
+  width: 86px;
+  height: 86px;
+
+  border-radius: 50%;
+
+  background: #3b1d0a;
+
+  border: 3px solid white;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+}
+
+.logo-f {
+  font-size: 42px;
+  font-weight: 800;
+
+  color: #d81f26;
+
+  line-height: 1;
+}
+
+.logo-cup {
+  font-size: 20px;
+}
+
+/* Text */
+
+.header-text {
+  text-align: center;
+}
+
+.header-text h1 {
+  color: #c41c1c;
+
+  font-size: 42px;
+
+  font-weight: 800;
+
+  margin-bottom: 8px;
+
+  line-height: 1.15;
+
+  text-shadow: 0 2px 6px rgba(255,255,255,.25);
+}
+
+.tagline {
+
+  color: #4d2b16;
+
+  font-size: 22px;
+
+  font-weight: 600;
+
+  margin-bottom: 14px;
+}
+
+/* Table */
+
+.table-badge {
+
+  display: inline-block;
+
+  background: #4b250f;
+
+  color: white;
+
+  padding: 10px 24px;
+
+  border-radius: 999px;
+
+  font-size: 18px;
+
+  font-weight: 700;
+
+  box-shadow: 0 6px 15px rgba(0,0,0,.18);
+}
+
+/* Background Icons */
+
+.header-bg-icon {
+
+  position: absolute;
+
+  font-size: 70px;
+
+  opacity: .10;
+
+  user-select: none;
+
+  pointer-events: none;
+}
+
+.left {
+  left: 45px;
+  bottom: 18px;
+}
+
+.right-top {
+  right: 120px;
+  top: 35px;
+}
+
+.right-bottom {
+  right: 30px;
+  bottom: 28px;
+}
+
+/* Mobile */
+
+@media (max-width:768px){
+
+.header-content{
+
+flex-direction:column;
+
+}
+
+.logo-circle{
+
+width:70px;
+height:70px;
+
+}
+
+.header-text h1{
+
+font-size:28px;
+
+}
+
+.tagline{
+
+font-size:16px;
+
+}
+
+.table-badge{
+
+font-size:15px;
+
+padding:8px 18px;
+
+}
+
+}

@@ -1,0 +1,25 @@
+.category-tabs {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding: 22px 0;
+  margin-bottom: 8px;
+}
+
+.category-btn {
+  border: none;
+  background: #ffffff;
+  color: #444;
+  padding: 13px 24px;
+  border-radius: 999px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 6px 15px rgba(0,0,0,.08);
+}
+
+.category-btn.active {
+  background: linear-gradient(135deg,#ff7a00,#ffb100);
+  color: white;
+}

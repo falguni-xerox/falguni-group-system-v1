@@ -1,0 +1,74 @@
+/* ================= GLOBAL ================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:
+    "Segoe UI",
+    Arial,
+    sans-serif;
+
+    background:#f5f6fa;
+
+    color:#222;
+
+}
+
+/* Main App */
+
+.app{
+
+    min-height:100vh;
+
+    padding-bottom:130px;
+
+}
+
+/* Content */
+
+.page-container{
+
+    width:min(1280px,92%);
+
+    margin:auto;
+
+}
+
+/* Product Grid */
+
+.menu-list{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:24px;
+
+    margin-bottom:40px;
+
+}
+
+/* Mobile */
+
+@media(max-width:900px){
+
+.menu-list{
+
+grid-template-columns:1fr;
+
+gap:18px;
+
+}
+
+.page-container{
+
+width:94%;
+
+}
+
+}

@@ -24,9 +24,7 @@ function Header() {
             Fresh Food • Quick Order
           </p>
 
-          <div className="table-badge">
-            🍽 Table 1
-          </div>
+
         </div>
 
       </div>

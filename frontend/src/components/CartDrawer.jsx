@@ -24,7 +24,9 @@ function CartDrawer({
     try {
       setLoading(true);
 
-      const response = await fetch("http://localhost:5000/api/orders", {
+      const API_URL = import.meta.env.VITE_API_URL;
+
+      const response = await fetch(`${API_URL}/api/orders`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -40,7 +42,10 @@ function CartDrawer({
 
       if (data.success) {
         alert(
-          `✅ Order Placed Successfully\n\nToken No : ${data.order.tokenNo}\nTable No : ${data.order.tableNo}`
+          `✅ Order Placed Successfully
+
+Token No : ${data.order.tokenNo}
+Table No : ${data.order.tableNo}`
         );
 
         console.log(data.order);
@@ -48,7 +53,7 @@ function CartDrawer({
         clearCart();
         onClose();
       } else {
-        alert(data.message);
+        alert(data.message || "Order Failed");
       }
     } catch (err) {
       console.error(err);
@@ -80,43 +85,55 @@ function CartDrawer({
           🍽️ Table No : {tableNo}
         </div>
 
-        {cart.map((item) => (
-          <div className="drawer-item" key={item.cartId}>
-            <div className="drawer-item-info">
-              <h3>{item.name}</h3>
+        {cart.length === 0 ? (
+          <p style={{ textAlign: "center", marginTop: "20px" }}>
+            Cart is Empty
+          </p>
+        ) : (
+          cart.map((item) => (
+            <div className="drawer-item" key={item.cartId}>
+              <div className="drawer-item-info">
+                <h3>{item.name}</h3>
 
-              <p>
-                Rs. {item.price}/- × {item.quantity}
-              </p>
+                <p>
+                  Rs. {item.price}/- × {item.quantity}
+                </p>
 
-              {item.customization?.length > 0 && (
-                <div className="addon-list">
-                  {item.customization.map((option) => (
-                    <span key={option.name || option}>
-                      + {option.name || option}
-                    </span>
-                  ))}
-                </div>
-              )}
+                {item.customization?.length > 0 && (
+                  <div className="addon-list">
+                    {item.customization.map((option) => (
+                      <span key={option.name}>
+                        + {option.name}
+                      </span>
+                    ))}
+                  </div>
+                )}
 
-              <strong className="item-total">
-                Item Total : Rs. {item.price * item.quantity}/-
-              </strong>
+                <strong className="item-total">
+                  Item Total : Rs. {item.price * item.quantity}/-
+                </strong>
+              </div>
+
+              <div className="qty-box">
+                <button
+                  className="qty-btn"
+                  onClick={() => onDecrease(item)}
+                >
+                  -
+                </button>
+
+                <span className="qty-number">{item.quantity}</span>
+
+                <button
+                  className="qty-btn"
+                  onClick={() => onIncrease(item)}
+                >
+                  +
+                </button>
+              </div>
             </div>
-
-            <div className="qty-box">
-              <button className="qty-btn" onClick={() => onDecrease(item)}>
-                -
-              </button>
-
-              <span className="qty-number">{item.quantity}</span>
-
-              <button className="qty-btn" onClick={() => onIncrease(item)}>
-                +
-              </button>
-            </div>
-          </div>
-        ))}
+          ))
+        )}
 
         <div className="drawer-total">
           <span>Grand Total</span>
@@ -126,7 +143,7 @@ function CartDrawer({
         <button
           className="place-order-btn"
           onClick={placeOrder}
-          disabled={loading}
+          disabled={loading || cart.length === 0}
         >
           {loading ? "Placing..." : "Place Order"}
         </button>

@@ -1,5 +1,4 @@
-import { useState } from "react";
-import products from "../data/products";
+import { useEffect, useState } from "react";
 
 import Header from "../components/Header";
 import CategoryTabs from "../components/CategoryTabs";
@@ -9,13 +8,27 @@ import CartDrawer from "../components/CartDrawer";
 
 import "../styles/app.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 function Home() {
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   const tableNo =
     new URLSearchParams(window.location.search).get("table") || "1";
+
+  useEffect(() => {
+    fetch(`${API_URL}/api/products`)
+      .then((res) => res.json())
+      .then((data) => {
+        setProducts(data.products || data);
+      })
+      .catch((err) => {
+        console.log("Products API Error:", err);
+      });
+  }, []);
 
   const categories = ["All", ...new Set(products.map((p) => p.category))];
 
@@ -28,10 +41,11 @@ function Home() {
     const extraAmount = options.reduce((sum, option) => sum + option.price, 0);
 
     const cartId =
-      product.id + "-" + options.map((option) => option.name).join("-");
+      product._id + "-" + options.map((option) => option.name).join("-");
 
     const finalProduct = {
       ...product,
+      id: product._id,
       cartId,
       basePrice: product.price,
       price: product.price + extraAmount,
@@ -77,7 +91,7 @@ function Home() {
 
   const getProductQuantity = (productId) => {
     return cart
-      .filter((item) => item.id === productId)
+      .filter((item) => item._id === productId || item.id === productId)
       .reduce((sum, item) => sum + item.quantity, 0);
   };
 
@@ -104,9 +118,9 @@ function Home() {
         <div className="menu-list">
           {filteredProducts.map((product) => (
             <ProductCard
-              key={product.id}
+              key={product._id}
               product={product}
-              quantity={getProductQuantity(product.id)}
+              quantity={getProductQuantity(product._id)}
               onIncrease={addToCart}
               onDecrease={removeFromCart}
             />

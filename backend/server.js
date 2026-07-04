@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 
 import productRoutes from "./routes/productRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
+import paymentRoutes from "./routes/paymentRoutes.js";
 
 dotenv.config();
 
@@ -13,15 +14,23 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// =========================
 // API Routes
+// =========================
 app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/payment", paymentRoutes);
 
+// =========================
 // Test Route
+// =========================
 app.get("/", (req, res) => {
   res.send("✅ Falguni Group System v1.0 API Running...");
 });
 
+// =========================
+// MongoDB Connection
+// =========================
 const PORT = process.env.PORT || 5000;
 
 mongoose

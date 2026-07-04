@@ -11,14 +11,23 @@ dotenv.config();
 
 const app = express();
 
+// =========================
+// Middleware
+// =========================
 app.use(cors());
 app.use(express.json());
 
 // =========================
 // API Routes
 // =========================
+
+// Product APIs
 app.use("/api/products", productRoutes);
+
+// Order APIs
 app.use("/api/orders", orderRoutes);
+
+// Payment APIs
 app.use("/api/payment", paymentRoutes);
 
 // =========================

@@ -4,6 +4,8 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 function Admin() {
   const [products, setProducts] = useState([]);
+  const [uploading, setUploading] = useState(false);
+
   const [form, setForm] = useState({
     name: "",
     category: "Tea",
@@ -44,6 +46,40 @@ function Admin() {
       ...form,
       [name]: type === "checkbox" ? checked : value,
     });
+  };
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const imageData = new FormData();
+    imageData.append("image", file);
+
+    try {
+      setUploading(true);
+
+      const res = await fetch(`${API_URL}/api/upload`, {
+        method: "POST",
+        body: imageData,
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        setForm({
+          ...form,
+          image: data.imageUrl,
+        });
+        alert("Image uploaded successfully");
+      } else {
+        alert(data.message || "Image upload failed");
+      }
+    } catch (error) {
+      alert("Image upload error");
+      console.log(error);
+    } finally {
+      setUploading(false);
+    }
   };
 
   const resetForm = () => {
@@ -170,12 +206,21 @@ function Admin() {
           required
         />
 
-        <input
-          name="image"
-          placeholder="Image URL"
-          value={form.image}
-          onChange={handleChange}
-        />
+        <input type="file" accept="image/*" onChange={handleImageUpload} />
+
+        {uploading && <p>Uploading image...</p>}
+
+        {form.image && (
+          <div style={{ marginTop: "10px" }}>
+            <img
+              src={form.image}
+              alt="Preview"
+              width="100"
+              height="100"
+              style={{ objectFit: "cover", borderRadius: "8px" }}
+            />
+          </div>
+        )}
 
         <input
           name="sortOrder"
@@ -205,7 +250,7 @@ function Admin() {
           Parcel Available
         </label>
 
-        <button type="submit">
+        <button type="submit" disabled={uploading}>
           {editingId ? "Update Product" : "Add Product"}
         </button>
 

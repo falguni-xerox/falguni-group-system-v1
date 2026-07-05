@@ -58,7 +58,7 @@ function Admin() {
     try {
       setUploading(true);
 
-      const res = await fetch(`${API_URL}/api/upload`, {
+      const res = await fetch(`${API_URL}/api/upload/image`, {
         method: "POST",
         body: imageData,
       });

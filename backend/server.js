@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import productRoutes from "./routes/productRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
+import uploadRoutes from "./routes/uploadRoutes.js";
 
 dotenv.config();
 
@@ -29,6 +30,9 @@ app.use("/api/orders", orderRoutes);
 
 // Payment APIs
 app.use("/api/payment", paymentRoutes);
+
+// Image Upload APIs (Cloudinary)
+app.use("/api/upload", uploadRoutes);
 
 // =========================
 // Test Route
